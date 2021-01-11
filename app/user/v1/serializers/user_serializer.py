@@ -14,7 +14,12 @@ class RegisterUserSerializer(serializers.Serializer):
     def validate_mobile_number(self, mobile_number):
         if not is_valid_mobile_number(mobile_number):
             raise serializers.ValidationError({
-                'mobile_number':'Not a valid mobile number'
+                'mobile_number': 'Not a valid mobile number'
+            })
+        
+        if User.objects.does_user_exist(mobile_number=mobile_number):
+            raise serializers.ValidationError({
+                'mobile_number': 'User exists'
             })
         
         return mobile_number
@@ -22,7 +27,12 @@ class RegisterUserSerializer(serializers.Serializer):
     def validate_email(self, email):
         if not is_valid_email(email):
             raise serializers.ValidationError({
-                'email':'Not a valid email'
+                'email': 'Not a valid email'
+            })
+        
+        if User.objects.does_user_exist(email=email):
+            raise serializers.ValidationError({
+                'email': 'User exists'
             })
         
         return email
@@ -30,7 +40,12 @@ class RegisterUserSerializer(serializers.Serializer):
     def validate_username(self, username):
         if not is_valid_username(username):
             raise serializers.ValidationError({
-                'username':'Not a valid username'
+                'username': 'Not a valid username'
+            })
+        
+        if User.objects.does_user_exist(username=username):
+            raise serializers.ValidationError({
+                'username': 'User exists'
             })
         
         return username

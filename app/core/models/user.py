@@ -19,6 +19,18 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
 
         return user
+    
+    def does_user_exist(self, **kwargs):
+        try:
+            self.get(
+                **kwargs,
+                is_deleted=False
+            )
+
+            return True
+        except ObjectDoesNotExist:
+            return False
+
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     """
