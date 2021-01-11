@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.5"
 
 services:
   app:
@@ -31,14 +31,18 @@ services:
   db:
     image: postgres:12-alpine
     environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5434:5432
 
   worker:
     build: .
     image: *app
     restart: always
     env_file: *envfile
-    command: ["celery", "worker", "--app=worker.worker.app", "--concurrency=1", "--hostname=worker@%h", "--loglevel=INFO"]
+    command: ["celery", "worker", "--app=worker.worker.app", "--concurrency=10", "--hostname=worker@%h", "--loglevel=INFO", "-Q",
+      "send_verification_email"]
     volumes:
       - ./app:/app
     depends_on:

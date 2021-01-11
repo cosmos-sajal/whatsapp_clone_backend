@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from user.v1.serializers.user_serializer import RegisterUserSerializer
+from worker.user.send_verification_email import send_verification_email
 
 
 class RegisterUserView(APIView):
@@ -19,7 +20,8 @@ class RegisterUserView(APIView):
 
         serializer = RegisterUserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user = serializer.save()
+            send_verification_email.delay(user.id)
 
             return Response({'result': 'done'}, status=status.HTTP_200_OK)
 
