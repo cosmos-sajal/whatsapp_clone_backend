@@ -33,6 +33,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     mobile_number = models.CharField(max_length=15, null=False)
     username = models.CharField(max_length=20, null=False)
     avatar = models.CharField(max_length=100, null=True)
+    email = models.EmailField(max_length=255, null=False)
+    is_email_verified = models.BooleanField(default=False)
     password, groups, user_permissions, is_superuser = None, None, None, None
 
     objects = UserManager()
