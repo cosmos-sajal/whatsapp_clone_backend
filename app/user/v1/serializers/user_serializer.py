@@ -4,6 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from core.models.user import User
 from helpers.validators import is_valid_email, \
     is_valid_mobile_number, is_valid_username
+from user.v1.services.email_verification_service \
+    import EmailVerificationService
 
 
 class RegisterUserSerializer(serializers.Serializer):
@@ -56,3 +58,31 @@ class RegisterUserSerializer(serializers.Serializer):
         """
         
         return User.objects.create_user(**validated_data)
+
+
+class SignatureHashSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField(required=True)
+    signature = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        """
+        Checks if the request is valid or not
+        """
+
+        user_id = attrs.get('user_id')
+        signature = attrs.get('signature')
+
+        if not User.objects.does_user_exist(
+            id=user_id
+        ):
+            raise serializers.ValidationError(
+                "User does not exist"
+            )
+
+        service = EmailVerificationService(user_id)
+        if not service.is_hash_valid(signature):
+            raise serializers.ValidationError(
+                "Invalid Request"
+            )
+
+        return attrs

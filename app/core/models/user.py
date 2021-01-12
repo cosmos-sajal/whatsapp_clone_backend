@@ -30,6 +30,14 @@ class UserManager(BaseUserManager):
             return True
         except ObjectDoesNotExist:
             return False
+    
+    def verify_email(self, user_id):
+        self.filter(
+            id=user_id,
+            is_deleted=False
+        ).update(
+            is_email_verified=True
+        )
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):

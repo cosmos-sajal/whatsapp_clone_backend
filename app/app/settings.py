@@ -57,7 +57,7 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +68,11 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_DIRS = [
+    "static",
+    '/app/static/',
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
@@ -121,6 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "/app/static_folder/"
 
 # celery-beat config
 CELERY_BEAT_SCHEDULE = {}
@@ -145,3 +151,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'your_account@gmail.com'
 EMAIL_HOST_PASSWORD = 'password'
 EMAIL_USE_SSL = False
+
+REPO_BASE_URL = 'REPO_BASE_URL'

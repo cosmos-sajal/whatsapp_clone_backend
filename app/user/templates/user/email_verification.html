@@ -1,0 +1,27 @@
+{% load static %}
+
+{% block title %}Email Verification{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+    function closeWindow() {
+        setTimeout(function() {
+            window.close();
+            }, 5000);
+        }
+        window.onload = closeWindow();
+</script>
+<div>
+    <link rel="stylesheet" href="{% static "user/style.css" %}" />
+    {% if is_success %}
+        <div class="center-aligned">
+            <h2 class="text-centered">{{ message }}</h2>
+            <h3 class="text-centered">You may now close this tab.</h3>
+        </div>
+    {% else %}
+        <div class="center-aligned">
+            <h2 class="text-centered">{{ error }}</h2>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
