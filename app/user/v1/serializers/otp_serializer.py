@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from core.models.user import User
+from user.v1.services.otp_service import OTPService
 
 
 class GenerateOTPSerializer(serializers.Serializer):
@@ -13,3 +14,22 @@ class GenerateOTPSerializer(serializers.Serializer):
             })
         
         return mobile_number
+
+
+class ValidateOTPSerializer(serializers.Serializer):
+    mobile_number = serializers.CharField(required=True, max_length=15)
+    otp = serializers.CharField(required=True, max_length=10)
+
+    def validate(self, attrs):
+        mobile_number = attrs.get('mobile_number')
+        otp = attrs.get('otp')
+
+        otp_service = OTPService(mobile_number)
+        generated_otp = otp_service.get_otp()
+
+        if generated_otp != otp:
+            raise serializers.ValidationError({
+                'otp': 'Wrong OTP'
+            })
+
+        return attrs

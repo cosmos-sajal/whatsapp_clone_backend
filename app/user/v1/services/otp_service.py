@@ -9,6 +9,24 @@ class OTPService():
         self.OTP_EXPIRY = 600 # in seconds
         self.cache_adapter = CacheAdapter()
     
+    def get_otp(self):
+        """
+        Returns the OTP stored in cache for
+        the given number
+        """
+
+        key = self.OTP_PREFIX + self.mobile_number
+
+        return self.cache_adapter.get(key)
+    
+    def clear_otp(self):
+        """
+        Clears the OTP from the cache
+        """
+
+        key = self.OTP_PREFIX + self.mobile_number
+        self.cache_adapter.delete(key)        
+    
     def generate_otp(self):
         """
         Generates OTP for the given mobile number
