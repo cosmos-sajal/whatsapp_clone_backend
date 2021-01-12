@@ -28,12 +28,21 @@ def send_otp_email(mobile_number, otp):
         is_deleted=False
     )
 
-    send_mail(
-        "OTP for Signing In!",
-        "Your OTP for logging into the service is - " + otp,
-        'sajal.4591@gmail.com',
-        [user.email],
-        fail_silently=False
-    )
+    if user.is_email_verified:
+        send_mail(
+            "OTP for Signing In!",
+            "Your OTP for logging into the service is - " + otp,
+            'sajal.4591@gmail.com',
+            [user.email],
+            fail_silently=False
+        )
+    else:
+        logger.info(
+            "send_otp_email - mobile_number:" +
+            mobile_number +
+            " can not send OTP" +
+            ", email is unverified"
+        )
+        return False
 
     return True
