@@ -10,9 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import firebase_admin
 import os
+
 from datetime import timedelta
+from firebase_admin import credentials
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -182,3 +186,7 @@ EMAIL_HOST_PASSWORD = 'password'
 EMAIL_USE_SSL = False
 
 REPO_BASE_URL = 'REPO_BASE_URL'
+
+# Firebase creds
+cred = credentials.Certificate('/serviceAccount.json')
+firebase_admin.initialize_app(cred)

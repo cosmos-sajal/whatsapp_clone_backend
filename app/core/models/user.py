@@ -4,6 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 from .base import BaseModel
+from helpers.cache_adapter import CacheAdapter
+from user.v1.constants import BACKEND_USER_KEY
 
 
 class UserManager(BaseUserManager):
@@ -38,6 +40,20 @@ class UserManager(BaseUserManager):
         ).update(
             is_email_verified=True
         )
+    
+    def get_backend_user(self):
+        """
+        Returns the backend user created for
+        support chat
+        """
+
+        cache_adapter = CacheAdapter()
+        user_id = cache_adapter.get(BACKEND_USER_KEY)
+
+        return self.get(
+            id=user_id,
+            is_deleted=False
+        )
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
@@ -52,7 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     mobile_number = models.CharField(max_length=15, null=False)
     username = models.CharField(max_length=20, null=False)
-    avatar = models.CharField(max_length=100, null=True)
+    avatar = models.CharField(max_length=500, null=True)
     email = models.EmailField(max_length=255, null=False)
     is_email_verified = models.BooleanField(default=False)
     password, groups, user_permissions, is_superuser = None, None, None, None

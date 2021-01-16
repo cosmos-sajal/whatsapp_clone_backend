@@ -42,7 +42,7 @@ services:
     restart: always
     env_file: *envfile
     command: ["celery", "worker", "--app=worker.worker.app", "--concurrency=10", "--hostname=worker@%h", "--loglevel=INFO", "-Q",
-      "send_verification_email,send_otp_email"]
+      "send_verification_email,send_otp_email,onboard_user"]
     volumes:
       - ./app:/app
     depends_on:

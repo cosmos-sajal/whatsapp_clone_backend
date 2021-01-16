@@ -8,6 +8,7 @@ from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from core.models.user import User
 from user.v1.services.token_service import TokenService
 from user.v1.serializers.user_serializer import RegisterUserSerializer, SignatureHashSerializer
+from worker.chat.onboard_user import onboard_user
 from worker.user.send_verification_email import send_verification_email
 
 
@@ -26,6 +27,7 @@ class RegisterUserView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             send_verification_email.delay(user.id)
+            onboard_user.delay(user.id)
 
             return Response({'result': 'done'}, status=status.HTTP_200_OK)
 
