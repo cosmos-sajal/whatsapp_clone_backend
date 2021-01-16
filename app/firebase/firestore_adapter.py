@@ -47,7 +47,7 @@ class FirestoreAdapter():
             u'status': status
         })
         chat_ref.update({
-            u'messages': firestore.ArrayUnion([message])
+            u'messages': firestore.ArrayUnion([{'text': message, 'system': True}])
         })
 
         user_chat_dict = {
