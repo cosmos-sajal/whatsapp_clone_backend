@@ -29,3 +29,4 @@ sentry_sdk.init(
 - You will receive a 500 in your response.
 - Check sentry. You should be seeing something like below, if yes then you are done.
 
+![alt text](https://raw.githubusercontent.com/cosmos-sajal/whatsapp_clone_backend/master/reference_images/sentry.png)
