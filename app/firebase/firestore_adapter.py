@@ -1,5 +1,7 @@
 from firebase_admin import firestore
 
+from helpers.misc_helper import get_created_at
+
 
 class FirestoreAdapter():
     def __init__(self):
@@ -33,9 +35,7 @@ class FirestoreAdapter():
         """
 
         status = kwargs.pop('status', 'active')
-
-        message = "Welcome to Support, message here" + \
-            " for help related to the product."
+        message_list = kwargs.pop('message_list', None)
 
         user_ids = []
         for user in user_list:
@@ -46,24 +46,27 @@ class FirestoreAdapter():
             u'users': user_ids,
             u'status': status
         })
-        chat_ref.update({
-            u'messages': firestore.ArrayUnion([{'text': message, 'system': True}])
-        })
 
+        if message_list is not None:
+            chat_ref.update({
+                u'messages': firestore.ArrayUnion(message_list)
+            })
+
+        created_at = get_created_at()
         user_chat_dict = {
             str(user_list[0]['id']) + '/chats/' + str(thread_id): {
                 'username': user_list[1]['username'],
-                'lastMessage': message,
                 'threadId': thread_id,
                 'avatar': user_list[1]['avatar'],
-                'unreadCount': 1
+                'updatedAt': created_at,
+                'userId': user_list[1]['id']
             },
             str(user_list[1]['id']) + '/chats/' + str(thread_id): {
                 'username': user_list[0]['username'],
-                'lastMessage': message,
                 'threadId': thread_id,
                 'avatar': user_list[0]['avatar'],
-                'unreadCount': 1
+                'updatedAt': created_at,
+                'userId': user_list[0]['id']
             }
         }
 

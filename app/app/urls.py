@@ -22,7 +22,8 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/user/', include('user.v1.urls'))
+    path('api/v1/user/', include('user.v1.urls')),
+    path('api/v1/chat/', include('chat.v1.urls'))
 ]
 
 if not settings.DEBUG:

@@ -190,3 +190,9 @@ REPO_BASE_URL = 'REPO_BASE_URL'
 # Firebase creds
 cred = credentials.Certificate('/serviceAccount.json')
 firebase_admin.initialize_app(cred)
+
+# Auth Token Config
+TOKEN_CONFIG = {
+    'SECRET_KEY': 'KEY',
+    'ALGORITHM': 'ALGORITHM'
+}
