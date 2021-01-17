@@ -5,6 +5,7 @@ from .base import BaseModel
 from core.models.user import User
 from core.models.thread_participant import ThreadParticipant
 from firebase.firestore_adapter import FirestoreAdapter
+from helpers.misc_helper import get_created_at
 
 
 class ThreadManager(models.Manager):
@@ -69,14 +70,19 @@ class ThreadManager(models.Manager):
             user_id (int)
         """
 
-        message = "Welcome to Support, message here" + \
+        message_text = "Welcome to Support, message here" + \
                     " for help related to the product."
         backend_user = User.objects.get_backend_user()
+        message = {
+            'text': message_text,
+            'system': True,
+            'createdAt': get_created_at()
+        }
 
         return self.create_chat(
             user_id,
             backend_user.id,
-            message_list=[{'text': message, 'system': True}]
+            message_list=[message]
         )
     
     def get_thread(self, user1_id, user2_id):

@@ -1,5 +1,7 @@
 from core.models.thread import Thread
 
+from helpers.misc_helper import get_created_at
+
 
 class ChatCreationService():
     def __init__(self, user1, user2):
@@ -21,13 +23,16 @@ class ChatCreationService():
         if thread_id is not None:
             return thread_id
         
+        created_at = get_created_at()
         user1_message = {
             'text': f'You can start conversing with {self.user2.username} now!',
-            'visibleTo': [self.user1.id]
+            'visibleTo': [self.user1.id],
+            'createdAt': created_at
         }
         user2_message = {
             'text': f'You can start conversing with {self.user1.username} now!',
-            'visibleTo': [self.user2.id]
+            'visibleTo': [self.user2.id],
+            'createdAt': created_at
         }
 
         thread_id = Thread.objects.create_chat(
