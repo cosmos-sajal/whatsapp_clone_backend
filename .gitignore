@@ -132,3 +132,4 @@ dmypy.json
 app/app/secrets.py
 
 serviceAccount.json
+api_key.json
