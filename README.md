@@ -1,9 +1,9 @@
 # whatsapp_clone_backend
 
-#### API Documentation
+### API Documentation
 - https://documenter.getpostman.com/view/14221347/TVzVibak
 
-#### How to do error logging using Sentry?
+### How to do error logging using Sentry?
 - Go to http://sentry.io/
 - Register an account.
 - Create a project under that account (choose the framework, in our case it's Django).
@@ -31,7 +31,7 @@ sentry_sdk.init(
 
 ![alt text](https://raw.githubusercontent.com/cosmos-sajal/whatsapp_clone_backend/master/reference_images/sentry.png)
 
-#### How to do application logging using Scalyr?
+### How to do application logging using Scalyr?
 - Go to https://app.scalyr.com/
 - Register your account.
 - Verify your email.
