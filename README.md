@@ -56,4 +56,7 @@ scalyr/scalyr-agent-docker-json
 `Remeber to change /Users/cosmos/projects/whatsapp_clone_backend/api_key.json to your path`
 - Now to rebuild the project, do `docker-compose build && docker-compose up`.
 - Hit any API, you should be seeing the logs coming up on scalyr, follow below image to see the logs, if this comes, then you are done.
+![alt text](https://raw.githubusercontent.com/cosmos-sajal/whatsapp_clone_backend/master/reference_images/scalyr1.png)
+
 - Try to use search functionality of scalyr using the screeshot below.
+![alt text](https://raw.githubusercontent.com/cosmos-sajal/whatsapp_clone_backend/master/reference_images/scalyr2.png)
