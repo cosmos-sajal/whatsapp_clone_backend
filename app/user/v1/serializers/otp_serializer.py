@@ -24,6 +24,11 @@ class ValidateOTPSerializer(serializers.Serializer):
         mobile_number = attrs.get('mobile_number')
         otp = attrs.get('otp')
 
+        if not User.objects.does_user_exist(mobile_number=mobile_number):
+            raise serializers.ValidationError({
+                'mobile_number': 'User does not exist'
+            })
+
         otp_service = OTPService(mobile_number)
         generated_otp = otp_service.get_otp()
 
