@@ -23,7 +23,7 @@ jobs:
         secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         account_id: ${{ secrets.AWS_ACCOUNT_ID }}
         region: ap-south-1
-        tags: latest,${{ env.RELEASE_VERSION }}
+        tags: latest
         repo: whatsapp-clone
         create_repo: true
         dockerfile: Dockerfile
