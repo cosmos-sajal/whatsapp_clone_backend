@@ -35,4 +35,4 @@ RUN set -ex \
 RUN mkdir /app
 WORKDIR /app
 COPY ./app /app
-COPY ./serviceAccount.json /
+# COPY ./serviceAccount.json /
