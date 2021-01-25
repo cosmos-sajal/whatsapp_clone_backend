@@ -16,7 +16,7 @@ RUN set -ex \
     " \
     && seq 1 8 | xargs -I{} mkdir -p /usr/share/man/man{} \
     && apt-get update && apt-get install -y --no-install-recommends $RUN_DEPS \
-    && apt-get install -y libcurl4-openssl-dev libssl-dev \
+    && apt-get install -y s4cmd libpq-dev gcc libcurl4-openssl-dev libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt /requirements.txt
@@ -35,4 +35,7 @@ RUN set -ex \
 RUN mkdir /app
 WORKDIR /app
 COPY ./app /app
-# COPY ./serviceAccount.json /
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN ln -s /usr/local/bin/docker-entrypoint.sh /
+ENTRYPOINT ["docker-entrypoint.sh"]
+
